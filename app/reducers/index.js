@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux'
-import todo from './todo'
+import masterdata from './masterdata'
+import masterapp from './masterapp'
+import pages from './pages'
 
 export default combineReducers({
-  todo
+  masterdata,
+  masterapp,
+  pages
 })
