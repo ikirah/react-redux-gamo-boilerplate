@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ApplicationAction from '../actions/applicationAction'
+import { Loading } from '../components'
 
 const actions = {
   ...ApplicationAction
@@ -11,6 +12,7 @@ const actions = {
 
 function mapStateToProps(state) {
   return {
+    showLoading: state.masterapp.showLoading
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -24,9 +26,11 @@ class App extends Component {
     actions.initApplication()
   }
   render() {
+    const { showLoading } = this.props
     return (
       <div>
         <Helmet title='React Redux boilerplate' />
+        {showLoading && <Loading />}
         <header className='main-header'>
           <nav>
             <ul className='navigation'>

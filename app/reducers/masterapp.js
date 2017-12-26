@@ -1,22 +1,25 @@
-const masterapp = (state = [], action) => {
-    switch (action.type) {
-      case 'ADD_TODO': {
-        return [
-          ...state,
-          {
-            id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-            todo: action.data
-          }
-        ]
-      }
-      case 'DELETE_TODO': {
-        return state.filter(todo => todo.id !== action.id)
-      }
-      default: {
-        return state
+const initialState = {
+  showLoading: false
+}
+
+const masterapp = (state = initialState, action) => {
+  switch (action.type) {
+    case 'APPLICATION/LOADING/SHOW': {
+      return {
+        ...state,
+        showLoading: true
       }
     }
+    case 'APPLICATION/LOADING/HIDE': {
+      return {
+        ...state,
+        showLoading: false
+      }
+    }
+    default: {
+      return state
+    }
   }
-  
-  export default masterapp
-  
+}
+
+export default masterapp

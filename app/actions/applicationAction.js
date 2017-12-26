@@ -1,33 +1,26 @@
 import { push } from 'react-router-redux'
 import { withTryCatch } from '../helpers/common'
-import { extractResponseData } from '../helpers/api'
-import * as MasterdataAPI from '../apis/masterdata'
+import * as MasterdataAction from './masterdataAction'
 
 export const goToPage = path => dispatch => dispatch(push(`/${path}`))
 
 export const initApplication = () => {
   return withTryCatch((dispatch, getState) => {
-    dispatch(getCustomerType())
-    dispatch(getCustomerTitle())
+    dispatch(showLoading())
+    dispatch(MasterdataAction.getCustomerType())
+    dispatch(MasterdataAction.getCustomerTitle())
+    dispatch(hideLoading())
   })
 }
 
-export const getCustomerType = () => {
-  return dispatch => {
-    const data = extractResponseData(MasterdataAPI.getCustomerType())
-    dispatch({
-      type: 'MASTERDATA/GET/CUSTOMERTYPE',
-      data
-    })
+export const showLoading = () => {
+  return {
+    type: 'APPLICATION/LOADING/SHOW'
   }
 }
 
-export const getCustomerTitle = () => {
-  return dispatch => {
-    const data = extractResponseData(MasterdataAPI.getCustomerTitle())
-    dispatch({
-      type: 'MASTERDATA/GET/CUSTOMERTITLE',
-      data
-    })
+export const hideLoading = () => {
+  return {
+    type: 'APPLICATION/LOADING/HIDE'
   }
 }
