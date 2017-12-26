@@ -8,7 +8,8 @@ import {
   CheckboxInput,
   RadioInput,
   PasswordInput,
-  TextInputWithoutError
+  TextInputWithoutError,
+  SwitchInput
 } from './components'
 
 export default class Index extends React.Component {
@@ -92,12 +93,11 @@ export default class Index extends React.Component {
   }
 
   handleChange = value => {
-    console.log(value)
     const { name, onChange, type } = this.props
     const errorMessage = this.handleValidation(value)
     try {
       if (type === 'text' || type === 'text-without-error') {
-        if (validateSpecialCharacter(value)) {
+        if (value === '' || validateSpecialCharacter(value)) {
           this.setState(() => {
             return {
               value: value,
@@ -282,6 +282,20 @@ export default class Index extends React.Component {
         return (
           <div className='checkbox-input'>
             <CheckboxInput {...propsForm} />
+          </div>
+        )
+      }
+      case 'switch': {
+        if (this.props.children) {
+          return (
+            <div className='switch-input'>
+              <SwitchInput {...propsForm}>{this.props.children}</SwitchInput>
+            </div>
+          )
+        }
+        return (
+          <div className='switch-input'>
+            <SwitchInput {...propsForm} />
           </div>
         )
       }

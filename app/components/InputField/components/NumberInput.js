@@ -17,7 +17,9 @@ export default class NumberInput extends React.PureComponent {
   componentDidMount() {
     const { value, format, handleBlur } = this.props
     const numberValue = Number(toNumber(value))
-    if (!isEmpty(value) && !isEmpty(format) && isFinite(toNumber(value))) { handleBlur(this.getValueFormat(toNumeral(numberValue.toString(), format))) }
+    if (!isEmpty(value) && !isEmpty(format) && isFinite(toNumber(value))) {
+      handleBlur(this.getValueFormat(toNumeral(numberValue.toString(), format)))
+    }
   }
 
   getValueFormat = value => {
@@ -112,7 +114,8 @@ export default class NumberInput extends React.PureComponent {
       errorMessage,
       inputProps,
       handleChange,
-      handleKeyCode
+      handleKeyCode,
+      rules
     } = this.props
 
     if (this.props.customElement) {
@@ -120,25 +123,32 @@ export default class NumberInput extends React.PureComponent {
     }
 
     let renderErrorMessage = ''
-    let classInput = 'form-input'
-    if (!isEmpty(errorMessage)) {
-      classInput = 'form-input error'
+    let requiredLabel = ''
+    let classInput = 'wrap-form-input'
+    if (errorMessage !== '') {
+      classInput = 'wrap-form-input error'
       renderErrorMessage = <div className='error-message'>{errorMessage}</div>
     }
 
+    if (!isEmpty(rules)) {
+      if (!isEmpty(rules.required)) {
+        requiredLabel = 'imp'
+      }
+    }
+
     return (
-      <div className={inputProps.className ? inputProps.className : 'field-group'}>
-        <label htmlFor={label}>
+      <div className={`box-form-input ` + requiredLabel}>
+        <label htmlFor={label} className='form-label'>
           {label} {!isEmpty(remark) && <span className='remark'>{remark}</span>}
         </label>
-        <div className='box-input'>
+        <div className={classInput}>
           <input
             ref={input => {
               if (input != null && focus) {
                 input.focus()
               }
             }}
-            className={classInput}
+            className='form-input'
             type='text'
             name={name}
             value={!isEmpty(format) ? toNumeral(value, format) : value}
@@ -149,9 +159,8 @@ export default class NumberInput extends React.PureComponent {
             onChange={e => this.onInputChange(e.target.value)}
             onBlur={e => this.handleOnBlur(e.target.value)}
           />
-          {renderErrorMessage}
+          {renderErrorMessage !== '' && <div className='validation-label'>{renderErrorMessage}</div>}
         </div>
-
         {this.props.children}
       </div>
     )

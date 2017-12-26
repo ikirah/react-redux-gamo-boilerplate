@@ -112,11 +112,3 @@ export default class RadioInput extends React.PureComponent {
     )
   }
 }
-
-// ;<div className='box-form-input'>
-//   <label className='form-label'>Text</label>
-//   <div className='wrap-form-input error'>
-//     <input className='form-input' placeholder='input text' />
-//     <div className='validation-label'>Validation message field</div>
-//   </div>
-// </div>

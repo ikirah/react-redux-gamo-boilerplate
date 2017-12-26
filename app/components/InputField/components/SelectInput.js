@@ -2,7 +2,6 @@ import React from 'react'
 import { isEmpty, getOption, pick } from '../../../helpers/inputForm'
 
 export default class SelectInput extends React.PureComponent {
-
   static defaultProps = {
     name: 'input',
     tabIndex: 0,
@@ -13,7 +12,7 @@ export default class SelectInput extends React.PureComponent {
     labelProps: {},
     disabled: false,
     focus: false,
-    placeholder: '',
+    placeholder: 'กรุณาเลือก',
     type: 'text'
   }
 
@@ -146,6 +145,9 @@ export default class SelectInput extends React.PureComponent {
             onKeyUp={e => handleKeyCode(e)}
             disabled={disabled}
           >
+            <option value='' disabled>
+              {placeholder}
+            </option>
             {renderOptions}
           </select>
           {renderErrorMessage}

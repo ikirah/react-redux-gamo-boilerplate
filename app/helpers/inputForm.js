@@ -42,7 +42,7 @@ export const pick = (keys, objects) => {
 }
 
 export const validateSpecialCharacter = value => {
-  return /^\w*$/.test(value)
+  return /^[^~\\$&?;!`^<>]+$/.test(value)
 }
 
 export const remove = (keys, objects) => {
