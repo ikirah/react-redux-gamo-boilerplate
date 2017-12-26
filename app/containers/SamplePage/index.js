@@ -53,7 +53,11 @@ class SamplePage extends Component {
       <div className='container'>
         <h1>Form Example</h1>
         <div className='row'>
-          <div className='D-3'>{renderInputField(formData.title)}</div>
+          <div className='D-3'>{renderInputField(formData.certificateId)}</div>
+          <div className='D-2'>{renderInputField(formData.title)}</div>
+          <div className='D-2'>{renderInputField(formData.firstname)}</div>
+          <div className='D-2'>{renderInputField(formData.middlename)}</div>
+          <div className='D-3'>{renderInputField(formData.lastname)}</div>
           <div className='D-3'>{renderInputField(formData.gender)}</div>
         </div>
       </div>

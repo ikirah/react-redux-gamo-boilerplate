@@ -1,6 +1,12 @@
+import moment from 'moment'
+
 const initialState = {
   title: '',
-  gender: ''
+  firstname: '',
+  middlename: '',
+  lastname: '',
+  gender: '',
+  certificateId: '',
 }
 
 const sample = (state = initialState, action) => {

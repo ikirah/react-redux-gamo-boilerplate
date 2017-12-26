@@ -14,11 +14,49 @@ const createForm = state => {
       options: titleOptions,
       rules: {
         required: 'กรุณาเลือก'
+      },
+      placeholder: 'กรุณาเลือก'
+    },
+    certificateId: {
+      label: 'เลขประจำตัวประชาชน',
+      type: 'number',
+      key: 'certificateId',
+      name: 'certificateId',
+      value: sampleState.certificateId,
+      rules: {
+        required: 'กรุณาระบุเลขประจำตัวประชาชน'
+      }
+    },
+    firstname: {
+      label: 'ชื่อ',
+      type: 'text',
+      key: 'firstname',
+      name: 'firstname',
+      value: sampleState.firstname,
+      rules: {
+        required: 'กรุณากรอกชื่อ'
+      }
+    },
+    middlename: {
+      label: 'ชื่อกลาง',
+      type: 'text',
+      key: 'middlename',
+      name: 'middlename',
+      value: sampleState.middlename
+    },
+    lastname: {
+      label: 'นามสกุล',
+      type: 'text',
+      key: 'lastname',
+      name: 'lastname',
+      value: sampleState.lastname,
+      rules: {
+        required: 'กรุณากรอกนามสกุล'
       }
     },
     gender: {
       label: 'เพศ',
-      type: 'radio',
+      type: 'switch',
       key: 'gender',
       name: 'gender',
       value: sampleState.gender,
