@@ -30,7 +30,6 @@ class App extends Component {
     return (
       <div>
         <Helmet title='React Redux boilerplate' />
-        {showLoading && <Loading />}
         <header className='main-header'>
           <nav>
             <ul className='navigation'>
@@ -57,6 +56,7 @@ class App extends Component {
             </ul>
           </nav>
         </header>
+        {showLoading && <Loading />}
         {this.props.children}
       </div>
     )

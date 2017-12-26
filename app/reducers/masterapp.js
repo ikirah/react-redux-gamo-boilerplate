@@ -1,8 +1,10 @@
-const initialState = {
-  showLoading: false
+const getInitialState = () => {
+  return {
+    showLoading: false
+  }
 }
 
-const masterapp = (state = initialState, action) => {
+const masterapp = (state = getInitialState(), action) => {
   switch (action.type) {
     case 'APPLICATION/LOADING/SHOW': {
       return {
