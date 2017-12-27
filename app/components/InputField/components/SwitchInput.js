@@ -52,13 +52,13 @@ export default class SwitchInput extends React.PureComponent {
     for (var key in options) {
       const getValue = value.value ? value.value : value
       const val = options[key].value
-      const active = getValue === val ? 'active' : ''
+      const active = getValue === val ? 'red active' : 'gray'
       renderOptions.push(
         <a
           href={options[key].linkUrl}
           onClick={() => handleChange(val)}
           value={val}
-          className={`button-outline red ` + active}
+          className={`button-outline ` + active}
           key={key}
         >
           {options[key].label}
