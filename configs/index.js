@@ -2,7 +2,8 @@ module.exports = {
   development: {
     isProduction: false,
     host: 'localhost',
-    port: 3000
+    port: 3000,
+    serviceURL: '/serviceURL'
   },
   production: {
     isProduction: true,

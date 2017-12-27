@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as ApplicationAction from '../actions/applicationAction'
 import { Loading } from '../components'
+import { ErrorModal } from '../components/Modal'
 
 const actions = {
   ...ApplicationAction
@@ -12,7 +13,9 @@ const actions = {
 
 function mapStateToProps(state) {
   return {
-    showLoading: state.masterapp.showLoading
+    showLoading: state.masterapp.showLoading,
+    showError: state.masterapp.showError,
+    errorDetail: state.masterapp.errorDetail
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -26,7 +29,7 @@ class App extends Component {
     actions.initApplication()
   }
   render() {
-    const { showLoading } = this.props
+    const { showLoading, showError, actions, errorDetail } = this.props
     return (
       <div>
         <Helmet title='React Redux boilerplate' />
@@ -57,6 +60,7 @@ class App extends Component {
           </nav>
         </header>
         {showLoading && <Loading />}
+        {showError && <ErrorModal onClose={actions.closeError} errorDetail={errorDetail} />}
         {this.props.children}
       </div>
     )

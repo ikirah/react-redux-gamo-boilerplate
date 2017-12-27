@@ -5,6 +5,8 @@ import { InputField } from '../../components'
 import { isValidForm } from '../../helpers/inputForm'
 import createForm from './createForm'
 import { bindFormValidation } from 'redux-form-manager'
+import * as ApplicationAction from '../../actions/applicationAction'
+import * as SampleAction from '../../actions/sampleAction'
 // ======================================================
 // Components
 // ======================================================
@@ -23,7 +25,10 @@ function mapStateToProps(state) {
 }
 
 // Action
-const actions = {}
+const actions = {
+  ...ApplicationAction,
+  ...SampleAction
+}
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actions, dispatch) }
 }
@@ -53,12 +58,31 @@ class SamplePage extends Component {
       <div className='container'>
         <h1>Form Example</h1>
         <div className='row'>
-          <div className='D-3'>{renderInputField(formData.certificateId)}</div>
+          <div className='D-2'>{renderInputField(formData.certificateId)}</div>
+          <div className='D-3'>{renderInputField(formData.gender)}</div>
+        </div>
+        <div className='row'>
           <div className='D-2'>{renderInputField(formData.title)}</div>
-          <div className='D-2'>{renderInputField(formData.firstname)}</div>
+          <div className='D-3'>{renderInputField(formData.firstname)}</div>
           <div className='D-2'>{renderInputField(formData.middlename)}</div>
           <div className='D-3'>{renderInputField(formData.lastname)}</div>
-          <div className='D-3'>{renderInputField(formData.gender)}</div>
+        </div>
+        <div className='row'>
+          <div className='D-6'>
+            <div className='font-desc red'>{firstError}</div>
+            <div className='button-inline'>
+              <button className='button gray' onClick={() => this.props.actions.goToPage('/')}>
+                ยกเลิก
+              </button>
+              <button
+                className='button green'
+                onClick={() => this.props.actions.submitForm()}
+                disabled={isValidForm(firstError)}
+              >
+                ยืนยัน
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )

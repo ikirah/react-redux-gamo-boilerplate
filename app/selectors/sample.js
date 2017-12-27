@@ -1,15 +1,18 @@
 import { createSelector } from 'reselect'
 
-// const getGoldChartForm = state => state.goldChartForm
+const getState = state => state
 
-// const getPriceToSave = createSelector([getGoldChartForm], goldChartForm => {
-//   return {
-//     barUpperPrice: parseFloat(goldChartForm.barUpperPrice),
-//     barLowerPrice: parseFloat(goldChartForm.barLowerPrice)
-//   }
-// })
+const getFormDataToSubmit = createSelector([getState], formData => {
+  return {
+    certificateId: formData.certificateId,
+    firstname: formData.firstname,
+    middlename: formData.middlename,
+    lastname: formData.lastname,
+    gender: formData.gender,
+    title: formData.title.value
+  }
+})
 
-// export default {
-//   getGoldChartForm,
-//   getPriceToSave
-// }
+export default {
+  getFormDataToSubmit
+}

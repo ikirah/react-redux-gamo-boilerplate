@@ -1,13 +1,16 @@
 import _ from 'lodash'
-import { fetchWithJarvis, handleResponseCatchError, convertToURLParam } from 'api-jarvis'
-import configs from '../../configs'
 import humps from 'humps'
-
+import configs from '../../configs'
+import { fetchWithJarvis, handleResponseCatchError, convertToURLParam, setDebugMode } from 'api-jarvis'
+setDebugMode(true)
+import { isServiceError, convertServiceResponseToError } from './error'
 const BASEURL = `${configs.serviceURL}`
 
 export const GET = (url, params) => {
   return fetchFacade(`${url}${convertToURLParam(params)}`, {
-    method: 'GET'
+    method: 'GET',
+    isResponseError: isServiceError,
+    toErrorFormat: convertServiceResponseToError
   }).then(response => {
     return response
   })
@@ -16,29 +19,19 @@ export const GET = (url, params) => {
 export const POST = (url, body, params) => {
   return fetchFacade(`${url}${convertToURLParam(params)}`, {
     method: 'POST',
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    isResponseError: isServiceError,
+    toErrorFormat: convertServiceResponseToError
   }).then(response => {
+    handleResponseCatchError(response, isServiceError, convertServiceResponseToError)
     return response
   })
 }
 
 const fetchFacade = (url, options) => {
-  console.log('fetchFacade', url)
   const isResponseError = options && options.isResponseError
   const toErrorFormat = options && options.toErrorFormat
-  let plugins = !isResponseError && !toErrorFormat ? undefined : {}
-  if (isResponseError) {
-    plugins = {
-      ...plugins,
-      isResponseError
-    }
-  }
-  if (toErrorFormat) {
-    plugins = {
-      ...plugins,
-      toErrorFormat
-    }
-  }
+
   return fetchWithJarvis(
     `${BASEURL}${url}`,
     {
@@ -49,9 +42,8 @@ const fetchFacade = (url, options) => {
       timeout: 90,
       ...options
     },
-    plugins
+    { isResponseError, toErrorFormat }
   ).then(response => {
-    handleResponseCatchError(response, isResponseError, toErrorFormat)
     return response
   })
 }

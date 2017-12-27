@@ -24,3 +24,16 @@ export const hideLoading = () => {
     type: 'APPLICATION/LOADING/HIDE'
   }
 }
+
+export const openError = error => {
+  return {
+    type: 'APPLCATION/ERROR/SHOW',
+    error
+  }
+}
+
+export const closeError = () => {
+  return {
+    type: 'APPLCATION/ERROR/HIDE'
+  }
+}

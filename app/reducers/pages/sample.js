@@ -6,7 +6,7 @@ const initialState = {
   middlename: '',
   lastname: '',
   gender: '',
-  certificateId: '',
+  certificateId: ''
 }
 
 const sample = (state = initialState, action) => {
