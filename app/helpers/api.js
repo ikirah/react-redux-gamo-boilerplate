@@ -48,8 +48,12 @@ const fetchFacade = (url, options) => {
   })
 }
 
-export const extractResponseData = response => {
-  return convertToCamelCase(_.get(response, 'response-data', ''))
+export const extractResponseData = (response, camelize = true) => {
+  if (camelize) {
+    return convertToCamelCase(_.get(response, 'response-data', ''))
+  } else {
+    return _.get(response, 'response-data', '')
+  }
 }
 
 export const convertToCamelCase = response => {
