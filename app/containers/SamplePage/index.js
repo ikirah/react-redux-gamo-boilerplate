@@ -60,6 +60,7 @@ class SamplePage extends Component {
         <div className='row'>
           <div className='D-2'>{renderInputField(formData.certificateId)}</div>
           <div className='D-3'>{renderInputField(formData.gender)}</div>
+          <div className='D-2'>{renderInputField(formData.birthDate)}</div>
         </div>
         <div className='row'>
           <div className='D-2'>{renderInputField(formData.title)}</div>
@@ -69,7 +70,7 @@ class SamplePage extends Component {
         </div>
         <div className='row'>
           <div className='D-6'>
-            <div className='font-desc red'>{firstError}</div>
+            <div className='font-desc text-red'>{firstError}</div>
             <div className='button-inline'>
               <button className='button gray' onClick={() => this.props.actions.goToPage('/')}>
                 ยกเลิก

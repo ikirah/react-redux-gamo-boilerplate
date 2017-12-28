@@ -9,7 +9,8 @@ import {
   RadioInput,
   PasswordInput,
   TextInputWithoutError,
-  SwitchInput
+  SwitchInput,
+  DateInput
 } from './components'
 
 export default class Index extends React.Component {
@@ -296,6 +297,13 @@ export default class Index extends React.Component {
         return (
           <div className='switch-input'>
             <SwitchInput {...propsForm} />
+          </div>
+        )
+      }
+      case 'date': {
+        return (
+          <div className='date-input'>
+            <DateInput {...propsForm} />
           </div>
         )
       }

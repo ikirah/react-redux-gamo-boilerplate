@@ -64,6 +64,16 @@ const createForm = state => {
       rules: {
         required: 'กรุณาเลือก'
       }
+    },
+    birthDate: {
+      label: 'วันเกิด',
+      type: 'date',
+      key: 'birthDate',
+      name: 'birthDate',
+      value: sampleState.birthDate,
+      rules: {
+        required: 'กรุณาระบุวันเกิด'
+      }
     }
   }
 }
