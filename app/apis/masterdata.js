@@ -2,7 +2,7 @@ import { handleResponseCatchError } from 'api-jarvis'
 import { GET } from '../helpers/api'
 
 const getCustomerType = param => {
-  //   return GET('/something', param)
+  //   return GET('/get-customer-type', param)
   const response = {
     status: 'SUCCESSFUL',
     'trx-id': '4QDG4V5415P1',
@@ -69,6 +69,7 @@ const getCustomerType = param => {
 }
 
 const getCustomerTitle = () => {
+  //   return GET('/get-customer-title', param)
   return {
     status: 'SUCCESSFUL',
     'trx-id': '67DG4V5HU4D0',

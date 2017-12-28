@@ -7,12 +7,12 @@ export const withTryCatch = func => {
     try {
       await func(dispatch, getState)
     } catch (error) {
+      dispatch(ApplicationAction.hideLoading())
       let _error = error
       if (/JVS/.test(_.get(error, 'code'))) {
         _error = convertJarvisError(error)
       }
       dispatch(ApplicationAction.openError(_error))
-      ApplicationAction.hideLoading()
     }
   }
 }
