@@ -1,9 +1,9 @@
 import _ from 'lodash'
 import humps from 'humps'
 import configs from '../../configs'
-import { fetchWithJarvis, handleResponseCatchError, convertToURLParam, setDebugMode } from 'api-jarvis'
-setDebugMode(true)
-import { isServiceError, convertServiceResponseToError } from './error'
+import * as ApplicationAction from '../actions/applicationAction'
+import { fetchWithJarvis, handleResponseCatchError, convertToURLParam } from 'api-jarvis'
+import { isServiceError, convertServiceResponseToError, convertJarvisError } from './error'
 const BASEURL = `${configs.serviceURL}`
 
 export const GET = (url, params) => {
@@ -61,4 +61,19 @@ export const convertToCamelCase = response => {
     const keyLower = key.toLowerCase()
     return /^[A-Z0-9]+$/.test(key) ? keyLower : convert(keyLower)
   })
+}
+
+export const withTryCatch = func => {
+  return async (dispatch, getState) => {
+    try {
+      await func(dispatch, getState)
+    } catch (error) {
+      dispatch(ApplicationAction.hideLoading())
+      let _error = error
+      if (/JVS/.test(_.get(error, 'code'))) {
+        _error = convertJarvisError(error)
+      }
+      dispatch(ApplicationAction.openError(_error))
+    }
+  }
 }

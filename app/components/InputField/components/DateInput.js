@@ -1,97 +1,80 @@
 import React from 'react'
-import { isEmpty, pick } from '../../../helpers/inputForm'
-import DayPickerInput from 'react-day-picker/DayPickerInput'
-import 'react-day-picker/lib/style.css'
-import moment from 'moment'
 import _ from 'lodash'
+import { isEmpty } from '../../../helpers/inputForm'
+import 'rc-calendar/assets/index.css'
+import PropTypes from 'prop-types'
+import Calendar from 'rc-calendar'
+import DatePicker from 'rc-calendar/lib/Picker'
+import thLocale from 'rc-calendar/lib/locale/th_TH'
 
-import MomentLocaleUtils, { formatDate, parseDate } from 'react-day-picker/moment'
-
+import moment from 'moment'
 import 'moment/locale/th'
 
-export default class DateInput extends React.PureComponent {
-  static defaultProps = {
-    name: 'input',
-    tabIndex: 0,
-    label: '',
-    value: '',
-    inputProps: {},
-    labelProps: {},
-    disabled: false,
-    focus: false,
-    placeholder: '',
-    type: 'text'
+const now = moment()
+
+now.locale('th')
+
+const defaultCalendarValue = now.clone()
+
+const disabledDate = current => {
+  if (!current) {
+    // allow empty select
+    return false
+  }
+  const date = moment()
+  date.hour(0)
+  date.minute(0)
+  date.second(0)
+  return current.valueOf() < date.valueOf() // can not select days before today
+}
+
+export default class DateInput extends React.Component {
+  static propTypes = {
+    defaultValue: PropTypes.object
   }
 
-  renderCustomElement = () => {
-    const {
-      label,
-      value,
-      disabled,
-      focus,
-      placeholder,
-      name,
-      errorMessage,
-      handleChange,
-      handleKeyCode,
-      handleBlur
-    } = this.props
-    let classInput = 'form-input'
-    if (errorMessage !== '') {
-      classInput = 'form-input error'
+  state = {
+    showTime: false,
+    showDateInput: true,
+    disabled: false,
+    value: this.props.defaultValue
+  }
+
+  getFormat = () => {
+    const { format } = this.props
+    return format || 'DD/MM/YYYY'
+  }
+
+  onChange = value => {
+    this.setState({
+      value
+    })
+    if (value) {
+      this.props.handleChange(value)
     }
-    const input = (
-      <input
-        ref={input => {
-          if (input != null && focus) {
-            input.focus()
-          }
-        }}
-        className={classInput}
-        type='text'
-        name={name}
-        value={value}
-        maxLength={this.props.maxLength}
-        placeholder={placeholder}
-        disabled={disabled}
-        onKeyUp={e => handleKeyCode(e)}
-        onChange={e => handleChange(e.target.value)}
-        onBlur={e => handleBlur(e.target.value)}
+  }
+
+  onShowDateInputChange = e => {
+    this.setState({
+      showDateInput: e.target.checked
+    })
+  }
+  render() {
+    const { label, value, disabled, remark, placeholder, name, errorMessage, rules } = this.props
+    const allowSelectPreviousDate = _.get(rules, 'allowSelectPreviousDate', true) ? null : disabledDate
+
+    const calendar = (
+      <Calendar
+        locale={thLocale}
+        style={{ zIndex: 1000 }}
+        dateInputPlaceholder={placeholder}
+        disabledTime={null}
+        defaultValue={defaultCalendarValue}
+        showDateInput
+        disabledDate={allowSelectPreviousDate}
+        selectedValue={value}
       />
     )
-    return this.props.customElement(input, label, errorMessage)
-  }
-  onChange = value => {
-    if (value) {
-      const dateValue = moment(value, 'llll')
-        .format('DD/MM/YYYY')
-        .toString()
-      this.props.handleChange(dateValue)
-    } else {
-      this.props.handleChange('')
-    }
-  }
-
-  render() {
-    const {
-      label,
-      value,
-      disabled,
-      remark,
-      focus,
-      placeholder,
-      name,
-      errorMessage,
-      handleChange,
-      handleKeyCode,
-      handleBlur,
-      rules,
-      format
-    } = this.props
-
-    if (this.props.customElement) {
-      return this.renderCustomElement()
-    }
 
     let renderErrorMessage = ''
     let requiredLabel = ''
@@ -106,24 +89,35 @@ export default class DateInput extends React.PureComponent {
         requiredLabel = 'imp'
       }
     }
-    const _format = _.get(this.props, 'format', 'DD/MM/YYYY')
+
     return (
       <div className={`box-form-input ` + requiredLabel}>
-        <label htmlFor={label} className='form-label'>
+        <label htmlFor={name} className='form-label'>
           {label} {!isEmpty(remark) && <span className='remark'>{remark}</span>}
         </label>
         <div className={classInput}>
-          <DayPickerInput
-            formatDate={formatDate}
-            parseDate={parseDate}
-            format={_format}
-            placeholder={placeholder || `${formatDate(new Date(), _format, 'th')}`}
-            dayPickerProps={{
-              locale: 'th',
-              localeUtils: MomentLocaleUtils
+          <DatePicker
+            animation='slide-up'
+            disabled={disabled}
+            calendar={calendar}
+            value={value}
+            onChange={this.onChange}
+          >
+            {({ value }) => {
+              return (
+                <span tabIndex='0'>
+                  <input
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    readOnly
+                    tabIndex='-1'
+                    className='form-input'
+                    value={(value && value.format(this.getFormat())) || ''}
+                  />
+                </span>
+              )
             }}
-            onDayChange={this.onChange}
-          />
+          </DatePicker>
           {renderErrorMessage !== '' && <div className='validation-label'>{renderErrorMessage}</div>}
         </div>
       </div>

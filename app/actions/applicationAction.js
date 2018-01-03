@@ -1,5 +1,5 @@
 import { push } from 'react-router-redux'
-import { withTryCatch } from '../helpers/common'
+import { withTryCatch } from '../helpers/api'
 import * as MasterdataAction from './masterdataAction'
 
 export const goToPage = path => dispatch => dispatch(push(`/${path}`))
