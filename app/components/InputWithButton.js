@@ -11,6 +11,7 @@ export default class InputWithButton extends Component {
 
   render() {
     const { fieldData, onChange, onClick } = this.props
+    const { buttonOption } = fieldData
     let isEmptyString = true
     if (fieldData.value !== '') {
       isEmptyString = false
@@ -32,12 +33,12 @@ export default class InputWithButton extends Component {
           </div>
           <span className='input-group-button'>
             <button
-              className={`button small ` + _.get(fieldData, 'buttonColor', 'red')}
+              className={`button small ` + _.get(buttonOption, 'color', 'red')}
               type='button'
               onClick={() => onClick()}
               disabled={isEmptyString || fieldData.disabled}
             >
-              {_.get(fieldData, 'buttonText', 'ค้นหา')}
+              {_.get(buttonOption, 'text', 'ค้นหา')}
             </button>
           </span>
         </div>

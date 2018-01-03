@@ -1,5 +1,4 @@
 import MasterdataSelector from '../../selectors/masterdata'
-import * as SampleAction from '../../actions/sampleAction'
 
 const createForm = state => {
   const sampleState = state.pages.sample
@@ -29,9 +28,8 @@ const createForm = state => {
         required: 'กรุณาระบุเลขประจำตัวประชาชน'
       },
       buttonOption: {
-        color: 'red',
-        text: 'ค้นหา',
-        onClick: SampleAction.searchCustomer()
+        color: 'blue',
+        text: 'ตรวจสอบ'
       }
     },
     firstname: {
@@ -79,7 +77,8 @@ const createForm = state => {
       name: 'birthDate',
       value: sampleState.birthDate,
       rules: {
-        required: 'กรุณาระบุวันเกิด'
+        required: 'กรุณาระบุวันเกิด',
+        allowSelectPreviousDate: true
       }
     }
   }
