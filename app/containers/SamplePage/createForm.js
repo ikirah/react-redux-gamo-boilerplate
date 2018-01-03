@@ -1,9 +1,11 @@
 import MasterdataSelector from '../../selectors/masterdata'
+import * as SampleAction from '../../actions/sampleAction'
 
 const createForm = state => {
   const sampleState = state.pages.sample
   const masterDataState = state.masterdata
   const titleOptions = MasterdataSelector.getTitleOptions(masterDataState)
+
   return {
     title: {
       label: 'คำนำหน้า',
@@ -19,12 +21,17 @@ const createForm = state => {
     },
     certificateId: {
       label: 'เลขประจำตัวประชาชน',
-      type: 'number',
+      type: 'text',
       key: 'certificateId',
       name: 'certificateId',
       value: sampleState.certificateId,
       rules: {
         required: 'กรุณาระบุเลขประจำตัวประชาชน'
+      },
+      buttonOption: {
+        color: 'red',
+        text: 'ค้นหา',
+        onClick: SampleAction.searchCustomer()
       }
     },
     firstname: {

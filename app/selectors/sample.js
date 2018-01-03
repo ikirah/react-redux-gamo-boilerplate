@@ -2,6 +2,8 @@ import { createSelector } from 'reselect'
 
 const getState = state => state
 
+const getCertificateId = state => state.certificateId
+
 const getFormDataToSubmit = createSelector([getState], formData => {
   return {
     certificateId: formData.certificateId,
@@ -14,5 +16,6 @@ const getFormDataToSubmit = createSelector([getState], formData => {
 })
 
 export default {
-  getFormDataToSubmit
+  getFormDataToSubmit,
+  getCertificateId
 }

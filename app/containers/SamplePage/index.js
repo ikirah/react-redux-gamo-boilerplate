@@ -1,30 +1,30 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { InputField } from '../../components'
-import { isValidForm } from '../../helpers/inputForm'
 import createForm from './createForm'
 import { bindFormValidation } from 'redux-form-manager'
-import * as ApplicationAction from '../../actions/applicationAction'
-import * as SampleAction from '../../actions/sampleAction'
 // ======================================================
 // Components
 // ======================================================
-
+import { InputField } from '../../components'
 // ======================================================
 // Containers
 // ======================================================
-
+import Search from './Search'
 // ======================================================
 // Actions
 // ======================================================
+import * as ApplicationAction from '../../actions/applicationAction'
+import * as SampleAction from '../../actions/sampleAction'
+// ======================================================
+// Helpers
+// ======================================================
+import { isValidForm } from '../../helpers/inputForm'
 
-// State
 function mapStateToProps(state) {
   return {}
 }
 
-// Action
 const actions = {
   ...ApplicationAction,
   ...SampleAction
@@ -57,16 +57,14 @@ class SamplePage extends Component {
     return (
       <div className='container'>
         <h1>Form Example</h1>
-        <div className='row'>
-          <div className='D-2'>{renderInputField(formData.certificateId)}</div>
-          <div className='D-3'>{renderInputField(formData.gender)}</div>
-          <div className='D-2'>{renderInputField(formData.birthDate)}</div>
-        </div>
+        <Search formData={formData} renderInputField={renderInputField} />
         <div className='row'>
           <div className='D-2'>{renderInputField(formData.title)}</div>
           <div className='D-3'>{renderInputField(formData.firstname)}</div>
           <div className='D-2'>{renderInputField(formData.middlename)}</div>
           <div className='D-3'>{renderInputField(formData.lastname)}</div>
+          <div className='D-3'>{renderInputField(formData.gender)}</div>
+          <div className='D-2'>{renderInputField(formData.birthDate)}</div>
         </div>
         <div className='row'>
           <div className='D-6'>
@@ -82,6 +80,7 @@ class SamplePage extends Component {
               >
                 ยืนยัน
               </button>
+              <br />
             </div>
           </div>
         </div>
