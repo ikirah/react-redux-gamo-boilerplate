@@ -2,11 +2,7 @@
   "name": "myapp",
   "version": "1.0.0",
   "description": "React starter boilerplate for client and server rendering (Universal)",
-  "repository": {
-    "url": "https://github.com/GA-MO/react-redux-gamo-boilerplate.git",
-    "type": "git"
-  },
-  "author": "Thawatchai Kuansombat (thawatchai.deartk@gmail.com)",
+  "author": "Thawatchai Kuansombat (thawatchai.deartk@gmail.com)/ Kirana Hongsaphak (hongsaphak.k@gmail.com)",
   "license": "MIT",
   "scripts": {
     "dev": "better-npm-run dev",
